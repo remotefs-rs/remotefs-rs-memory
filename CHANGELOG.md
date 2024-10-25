@@ -1,12 +1,19 @@
 # Changelog
 
 - [Changelog](#changelog)
+  - [0.1.4](#014)
   - [0.1.3](#013)
   - [0.1.2](#012)
   - [0.1.1](#011)
   - [0.1.0](#010)
 
 ---
+
+## 0.1.4
+
+Released on 25/10/2024
+
+- made remotefs-memory `sync` + `send`
 
 ## 0.1.3
 
