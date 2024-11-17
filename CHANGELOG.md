@@ -1,6 +1,7 @@
 # Changelog
 
 - [Changelog](#changelog)
+  - [0.1.6](#016)
   - [0.1.5](#015)
   - [0.1.3](#013)
   - [0.1.2](#012)
@@ -8,6 +9,12 @@
   - [0.1.0](#010)
 
 ---
+
+## 0.1.6
+
+Released on 17/11/2024
+
+- Return `WriteStream` as `WriteAndSeek`
 
 ## 0.1.5
 
