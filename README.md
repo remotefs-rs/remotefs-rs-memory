@@ -39,8 +39,8 @@
 <p align="center">
   <a href="https://github.com/remotefs-rs/remotefs-rs-memory/actions"
     ><img
-      src="https://github.com/remotefs-rs/remotefs-rs-memory/workflows/linux/badge.svg"
-      alt="Linux CI"
+      src="https://github.com/remotefs-rs/remotefs-rs-memory/workflows/CI/badge.svg"
+      alt="CI"
   /></a>
   <a href="https://docs.rs/remotefs-memory"
     ><img
