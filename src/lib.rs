@@ -58,7 +58,7 @@ use std::io::{Cursor, Read, Seek, Write};
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
 
-pub use orange_trees::{node, Node, Tree};
+pub use orange_trees::{Node, Tree, node};
 use remotefs::fs::stream::{StreamWriter, WriteAndSeek};
 use remotefs::fs::{FileType, Metadata, ReadStream, UnixPex, Welcome, WriteStream};
 use remotefs::{File, RemoteError, RemoteErrorType, RemoteFs, RemoteResult};
