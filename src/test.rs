@@ -235,7 +235,7 @@ fn should_list_dir() {
         .list_dir(wrkdir.as_path())
         .ok()
         .unwrap()
-        .get(0)
+        .first()
         .unwrap()
         .clone();
     assert_eq!(file.name().as_str(), "a.txt");
