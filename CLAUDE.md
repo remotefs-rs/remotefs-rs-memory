@@ -46,18 +46,26 @@ and simulations. It is a library-only crate (`src/lib.rs`, crate name
 `remotefs_memory`) with no binaries or examples.
 
 - **One client.** `MemoryFs` in `src/lib.rs` implements `remotefs::RemoteFs`
-  over an `orange_trees::Tree<PathBuf, Inode>` (`FsTree`). Every operation
-  mutates or queries that tree directly; there is no I/O beyond it.
+  (remotefs 1) over an `orange_trees::Tree<PathBuf, Inode>` (`FsTree`) held
+  behind `Arc<Mutex<FsTree>>` so every operation takes `&self`; the connection
+  flag is an `AtomicBool`. There is no working directory: every path must be
+  absolute and is validated with `remotefs::path::ensure_absolute` before the
+  connection check. `rename` and `copy` clone the whole subtree and rewrite
+  its ids; `remove_dir_all` drops the subtree in one call without following
+  symlinks. `exec` is unsupported.
 - **Inode.** `src/inode.rs` defines `Inode`, the value stored at each tree
   node: `Metadata` plus optional file content (`None` for directories).
   `Inode::dir`, `Inode::file`, and `Inode::symlink` are the only ways to
   construct one.
-- **Write streams.** `create` and `append` hand back a `WriteHandle`
-  (`src/lib.rs`) wrapping a `Cursor<Vec<u8>>`, downcast back from the trait
-  object in `on_written` to commit the buffered bytes into the tree.
-- **uid/gid.** `get_uid`/`get_gid` are pluggable closures (default: always
-  `0`), overridable via `MemoryFs::with_get_uid`/`with_get_gid`, since an
-  in-memory filesystem has no real owner to read from.
+- **Streams.** `src/stream.rs` holds `MemoryReader` (a seekable cursor over a
+  ranged snapshot of the file) and `MemoryWriter` (stages bytes in a cursor
+  and commits content, size, and `modified` into the tree on `finish`). The
+  inode is inserted when the stream opens; a dropped writer discards the
+  staged bytes and logs at `debug` level.
+- **uid/gid.** `get_uid`/`get_gid` are pluggable
+  `Box<dyn Fn() -> u32 + Send + Sync>` closures (default: always `0`),
+  overridable via `MemoryFs::with_get_uid`/`with_get_gid`, since an in-memory
+  filesystem has no real owner to read from.
 - **Command layer.** `Justfile` is a thin importer. Each recipe group lives in
   its own file under `just/` (`build`, `test`, `code_check`, `changelog`,
   `publish`) and carries a `[group(...)]` attribute so `just --list` stays
@@ -79,7 +87,7 @@ and simulations. It is a library-only crate (`src/lib.rs`, crate name
 ## Conventions
 
 - Toolchain is pinned to Rust 1.98.1 (`rust-toolchain.toml`). `package.edition`
-  in `Cargo.toml` is 2024 and `package.rust-version` is 1.85; do not bump
+  in `Cargo.toml` is 2024 and `package.rust-version` is 1.89; do not bump
   either as part of unrelated changes.
 - Public library items need canonical rustdoc, including a runnable example.
   `just test` runs doctests, and `just doc` denies warnings.

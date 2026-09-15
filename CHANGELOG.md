@@ -1,46 +1,56 @@
 # Changelog
 
-- [Changelog](#changelog)
-  - [0.1.6](#016)
-  - [0.1.5](#015)
-  - [0.1.3](#013)
-  - [0.1.2](#012)
-  - [0.1.1](#011)
-  - [0.1.0](#010)
+All notable changes to this project are documented in this file.
 
----
+## 1.0.0
 
-## 0.1.6
+Released on 2026-09-15
 
-Released on 17/11/2024
+### Breaking changes
 
-- Return `WriteStream` as `WriteAndSeek`
+- migrate to remotefs 1
 
-## 0.1.5
+> migrate MemoryFs to the remotefs 1 blocking contract and release version 1.0.0. Every path must be absolute, pwd and change_dir are removed, operations take a shared reference over a mutex-guarded tree, connect returns unit, transfers return owned streams that commit on finish, rename and copy move whole subtrees, and the minimum supported Rust version is 1.89.
 
-Released on 25/10/2024
+### Added
 
-- made remotefs-memory `sync` + `send`
+- Breaking: migrate to remotefs 1
 
-## 0.1.3
+### Fixed
 
-Released on 25/10/2024
+- send + sync
+- bump
+- Return WriteStream as WriteAndSeek
 
-- set `modified` on `on_written`
-- symlink: write `target` as file content
-- symlink: fixed file mode
+## 0.1.4
+
+Released on 2024-10-25
+
+### Fixed
+
+- symlink issues
 
 ## 0.1.2
 
-Released on 23/10/2024
+Released on 2024-10-23
 
-- Added log
+### Fixed
+
+- ver
+- log
 
 ## 0.1.1
 
-Released on 22/10/2024
+Released on 2024-10-22
 
-- `with_get_uid` constructor
-- `with_get_gid` constructor
+### Fixed
+
+- `with_get_uid` and `with_get_gid` constructors
 
 ## 0.1.0
+
+Released on 2024-10-22
+
+### Added
+
+- remotefs memory
