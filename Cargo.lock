@@ -51,6 +51,8 @@ dependencies = [
 [[package]]
 name = "remotefs"
 version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a05d0b57c934fb0927d75d90d80b21b35eb5343a1e8379e151b374751b3ad5b9"
 dependencies = [
  "log",
  "thiserror",
